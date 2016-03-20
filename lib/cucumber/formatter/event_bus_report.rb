@@ -1,3 +1,5 @@
+require 'cucumber/events'
+
 module Cucumber
   module Formatter
 
@@ -12,24 +14,24 @@ module Cucumber
       end
 
       def before_test_case(test_case)
-        @config.notify Events::BeforeTestCase.new(test_case)
+        @config.notify Cucumber::Events::BeforeTestCase.new(test_case)
         @test_case = test_case
       end
 
       def before_test_step(test_step)
-        @config.notify Events::BeforeTestStep.new(@test_case, test_step)
+        @config.notify Cucumber::Events::BeforeTestStep.new(@test_case, test_step)
       end
 
       def after_test_step(test_step, result)
-        @config.notify Events::AfterTestStep.new(@test_case, test_step, result)
+        @config.notify Cucumber::Events::AfterTestStep.new(@test_case, test_step, result)
       end
 
       def after_test_case(test_case, result)
-        @config.notify Events::AfterTestCase.new(test_case, result)
+        @config.notify Cucumber::Events::AfterTestCase.new(test_case, result)
       end
 
       def done
-        @config.notify Events::FinishedTesting.new
+        @config.notify Cucumber::Events::FinishedTesting.new
       end
     end
 

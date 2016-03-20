@@ -65,6 +65,7 @@ module Cucumber
       self.visitor = report
 
       receiver = Test::Runner.new(report)
+      @configuration.notify(Events::TestRunStarted.new(@configuration))
       compile features, receiver, filters
     end
 
@@ -113,6 +114,7 @@ module Cucumber
     def features
       @features ||= feature_files.map do |path|
         source = NormalisedEncodingFile.read(path)
+        @configuration.notify(Events::GherkinSourceRead.new(path, source))
         Cucumber::Core::Gherkin::Document.new(path, source)
       end
     end
