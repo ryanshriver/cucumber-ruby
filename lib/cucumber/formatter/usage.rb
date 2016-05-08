@@ -4,27 +4,34 @@ require 'cucumber/step_definition_light'
 module Cucumber
   module Formatter
     class Usage < Progress
-      include Console
 
       class StepDefKey < StepDefinitionLight
         attr_accessor :mean_duration, :status
       end
 
-      def initialize(runtime, path_or_io, options)
-        @runtime = runtime
-        @io = ensure_io(path_or_io)
-        @options = options
+      def initialize(config)
+        super
         @stepdef_to_match = Hash.new { |h, stepdef_key| h[stepdef_key] = [] }
         @total_duration = 0
         @matches = {}
-        runtime.configuration.on_event :step_match do |event|
-          @matches[event.test_step.source] = event.step_match
-        end
+        config.on_event :step_definition_loaded, &method(:on_step_definition_loaded)
       end
 
-      def after_test_step(test_step, result)
-        return if HookQueryVisitor.new(test_step).hook?
+      def on_step_definition_loaded(event)
+        stepdef_key = StepDefKey.new(event.step_definition.regexp_source, event.step_definition.location)
+        @stepdef_to_match[stepdef_key] = []
+      end
 
+      def on_step_match(event)
+        @matches[event.test_step.source] = event.step_match
+        super
+      end
+
+      def on_after_test_step(event)
+        return if HookQueryVisitor.new(event.test_step).hook?
+
+        test_step = event.test_step
+        result = event.result.with_filtered_backtrace(Cucumber::Formatter::BacktraceFilter)
         step_match = @matches[test_step.source]
         step_definition = step_match.step_definition
         stepdef_key = StepDefKey.new(step_definition.regexp_source, step_definition.location)
@@ -45,10 +52,9 @@ module Cucumber
       private
 
       def print_summary
-        add_unused_stepdefs
         aggregate_info
 
-        if @options[:dry_run]
+        if config.dry_run?
           keys = @stepdef_to_match.keys.sort {|a,b| a.regexp_source <=> b.regexp_source}
         else
           keys = @stepdef_to_match.keys.sort {|a,b| a.mean_duration <=> b.mean_duration}.reverse
@@ -68,9 +74,9 @@ module Cucumber
       end
 
       def print_step_definition(stepdef_key)
-        @io.print format_string(sprintf("%.7f", stepdef_key.mean_duration), :skipped) + " " unless @options[:dry_run]
+        @io.print format_string(sprintf("%.7f", stepdef_key.mean_duration), :skipped) + " " unless config.dry_run?
         @io.print format_string(stepdef_key.regexp_source, stepdef_key.status)
-        if @options[:source]
+        if config.source?
           indent = max_length - stepdef_key.regexp_source.unpack('U*').length
           line_comment = "   # #{stepdef_key.location}".indent(indent)
           @io.print(format_string(line_comment, :comment))
@@ -81,9 +87,9 @@ module Cucumber
       def print_steps(stepdef_key)
         @stepdef_to_match[stepdef_key].each do |step|
           @io.print "  "
-          @io.print format_string(sprintf("%.7f", step[:duration]), :skipped) + " " unless @options[:dry_run]
+          @io.print format_string(sprintf("%.7f", step[:duration]), :skipped) + " " unless config.dry_run?
           @io.print format_step(step[:keyword], step[:step_match], step[:status], nil)
-          if @options[:source]
+          if config.source?
             indent = max_length - (step[:keyword].unpack('U*').length + step[:step_match].format_args.unpack('U*').length)
             line_comment = " # #{step[:location]}".indent(indent)
             @io.print(format_string(line_comment, :comment))
@@ -125,12 +131,6 @@ module Cucumber
         end
       end
 
-      def add_unused_stepdefs
-        @runtime.unmatched_step_definitions.each do |step_definition|
-          stepdef_key = StepDefKey.new(step_definition.regexp_source, step_definition.location)
-          @stepdef_to_match[stepdef_key] = []
-        end
-      end
     end
   end
 end
