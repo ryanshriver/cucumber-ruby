@@ -1,10 +1,10 @@
 module Cucumber
   module Events
 
-    # Event fired after each step definition has been loaded
-    class StepDefinitionLoaded
+    # Event fired after each step definition has been registered
+    class StepDefinitionRegistered
 
-      # The step definition that was just loaded.
+      # The step definition that was just registered.
       #
       # @return [Cucumber::Core::Test::Case]
       attr_reader :step_definition

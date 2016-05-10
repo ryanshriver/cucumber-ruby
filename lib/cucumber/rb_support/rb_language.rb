@@ -9,7 +9,7 @@ require 'cucumber/gherkin/i18n'
 require 'multi_test'
 require 'cucumber/step_match'
 require 'cucumber/step_definition_light'
-require 'cucumber/events/step_definition_loaded'
+require 'cucumber/events/step_definition_registered'
 
 module Cucumber
   module RbSupport
@@ -80,7 +80,7 @@ module Cucumber
       def register_rb_step_definition(regexp, proc_or_sym, options)
         step_definition = RbStepDefinition.new(self, regexp, proc_or_sym, options)
         @step_definitions << step_definition
-        @configuration.notify Events::StepDefinitionLoaded.new(step_definition)
+        @configuration.notify Events::StepDefinitionRegistered.new(step_definition)
         step_definition
       end
 

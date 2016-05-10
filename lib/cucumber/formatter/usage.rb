@@ -14,10 +14,10 @@ module Cucumber
         @stepdef_to_match = Hash.new { |h, stepdef_key| h[stepdef_key] = [] }
         @total_duration = 0
         @matches = {}
-        config.on_event :step_definition_loaded, &method(:on_step_definition_loaded)
+        config.on_event :step_definition_registered, &method(:on_step_definition_registered)
       end
 
-      def on_step_definition_loaded(event)
+      def on_step_definition_registered(event)
         stepdef_key = StepDefKey.new(event.step_definition.regexp_source, event.step_definition.location)
         @stepdef_to_match[stepdef_key] = []
       end
