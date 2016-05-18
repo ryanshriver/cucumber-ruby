@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name        = 'cucumber'
-  s.version     = File.read(File.expand_path("../lib/cucumber/version", __FILE__))
-  s.authors     = ["Aslak Hellesøy", "Matt Wynne", "Steve Tooke"]
-  s.description = 'Behaviour Driven Development with elegance and joy'
-  s.summary     = "cucumber-#{s.version}"
-  s.email       = 'cukes@googlegroups.com'
+  s.name        = 'mobiusloop'
+  s.version     = '0.1.0.pre'
+  s.authors     = ["Ryan Shriver"]
+  s.description = 'A framework for measuring and delivering value'
+  s.summary     = "mobiusloop-#{s.version}"
+  s.email       = 'ryanshriver@mac.com'
   s.license     = 'MIT'
-  s.homepage    = "http://cukes.info"
+  s.homepage    = "http://mobiusloop.com"
   s.platform    = Gem::Platform::RUBY
   s.required_ruby_version = ">= 1.9.3"
   s.add_dependency 'cucumber-core', '~> 1.4.0'
