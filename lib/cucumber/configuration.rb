@@ -136,7 +136,7 @@ module Cucumber
         # TODO: Move to using feature loading strategies stored in
         # options[:feature_loaders]
         if File.directory?(path)
-          Dir["#{path}/**/*.feature"].sort
+          Dir["#{path}/**/*.goal"].sort
         elsif Cli::RerunFile.can_read?(path)
           Cli::RerunFile.new(path).features
         else
@@ -162,7 +162,7 @@ module Cucumber
       end.flatten.uniq
       remove_excluded_files_from(files)
       files.reject! {|f| !File.file?(f)}
-      files.reject! {|f| File.extname(f) == '.feature' }
+      files.reject! {|f| File.extname(f) == '.goal' }
       files.reject! {|f| f =~ /^http/}
       files.sort
     end
@@ -220,7 +220,7 @@ module Cucumber
 
     def default_options
       {
-        :autoload_code_paths => ['features/support', 'features/step_definitions'],
+        :autoload_code_paths => ['goals/support', 'goals/step_definitions'],
         :filters             => [],
         :strict              => false,
         :require             => [],
@@ -245,7 +245,7 @@ module Cucumber
 
 
     def default_features_paths
-      ["features"]
+      ["goals"]
     end
 
     def with_default_features_path(paths)

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'mobiusloop'
-  s.version     = '0.1.0.pre'
+  s.version     = '0.1.1.pre'
   s.authors     = ["Ryan Shriver"]
   s.description = 'A framework for measuring and delivering value'
   s.summary     = "mobiusloop-#{s.version}"

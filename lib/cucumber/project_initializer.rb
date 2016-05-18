@@ -3,10 +3,10 @@ module Cucumber
   # Generates generic file structure for a cucumber project
   class ProjectInitializer
     def run
-      create_directory('features')
-      create_directory('features/step_definitions')
-      create_directory('features/support')
-      create_file('features/support/env.rb')
+      create_directory('goals')
+      create_directory('goals/step_definitions')
+      create_directory('goals/support')
+      create_file('goals/support/env.rb')
     end
 
     private
