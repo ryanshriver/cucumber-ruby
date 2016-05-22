@@ -6,7 +6,7 @@ require 'cucumber/core/platform'
 module Cucumber
   unless defined?(Cucumber::VERSION)
     VERSION       = File.read(File.expand_path("../version", __FILE__))
-    BINARY        = File.expand_path(File.dirname(__FILE__) + '/../../bin/cucumber')
+    BINARY        = File.expand_path(File.dirname(__FILE__) + '/../../bin/mobiusloop')
     LIBDIR        = File.expand_path(File.dirname(__FILE__) + '/../../lib')
     RAILS         = defined?(Rails)
     RUBY_BINARY   = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])

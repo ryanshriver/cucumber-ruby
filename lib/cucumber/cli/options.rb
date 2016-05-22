@@ -85,17 +85,16 @@ module Cucumber
         @args.extend(::OptionParser::Arguable)
 
         @args.options do |opts|
-          opts.banner = ["Usage: cucumber [options] [ [FILE|DIR|URL][:LINE[:LINE]*] ]+", "",
+          opts.banner = ["Usage: mobiusloop [options] [ [FILE|DIR|URL][:LINE[:LINE]*] ]+", "",
             "Examples:",
-            "cucumber examples/i18n/en/features",
-            "cucumber @rerun.txt (See --format rerun)",
-            "cucumber examples/i18n/it/features/somma.feature:6:98:113",
-            "cucumber -s -i http://rubyurl.com/eeCl", "", "",
+            "mobiusloop product_name/goals",
+            "mobiusloop @rerun.txt (See --format rerun)",
+            "mobiusloop product_name/goals/increase_customers.goal",
           ].join("\n")
           opts.on("-r LIBRARY|DIR", "--require LIBRARY|DIR",
-            "Require files before executing the features. If this",
+            "Require files before executing the goals. If this",
             "option is not specified, all *.rb files that are",
-            "siblings or below the features will be loaded auto-",
+            "siblings or below the goals will be loaded auto-",
             "matically. Automatic loading is disabled when this",
             "option is specified, and all loading becomes explicit.",
             "Files under directories named \"support\" are always",
@@ -138,7 +137,7 @@ module Cucumber
           end
           opts.on('--init',
             'Initializes folder structure and generates conventional files for',
-            'a Cucumber project.') do |v|
+            'a mobiusloop project.') do |v|
             ProjectInitializer.new.run
             Kernel.exit(0)
           end
@@ -151,8 +150,8 @@ module Cucumber
             @options[:formats][-1][1] = v
           end
           opts.on("-t TAG_EXPRESSION", "--tags TAG_EXPRESSION",
-            "Only execute the features or scenarios with tags matching TAG_EXPRESSION.",
-            "Scenarios inherit tags declared on the Feature level. The simplest",
+            "Only execute the goals or scenarios with tags matching TAG_EXPRESSION.",
+            "Outcomes inherit tags declared on the Objective level. The simplest",
             "TAG_EXPRESSION is simply a tag. Example: --tags @dev. When a tag in a tag",
             "expression starts with a ~, this represents boolean NOT. Example: --tags ~@dev.",
             "A tag expression can have several tags separated by a comma, which represents",
@@ -174,7 +173,7 @@ module Cucumber
             "given names.") do |v|
             @options[:name_regexps] << /#{v}/
           end
-          opts.on("-e", "--exclude PATTERN", "Don't run feature files or require ruby files matching PATTERN") do |v|
+          opts.on("-e", "--exclude PATTERN", "Don't run goal files or require ruby files matching PATTERN") do |v|
             @options[:excludes] << Regexp.new(v)
           end
           opts.on(PROFILE_SHORT_FLAG, "#{PROFILE_LONG_FLAG} PROFILE",
@@ -233,10 +232,10 @@ module Cucumber
           opts.on("-S", "--strict", "Fail if there are any undefined or pending steps.") do
             @options[:strict] = true
           end
-          opts.on("-w", "--wip", "Fail if there are any passing scenarios.") do
+          opts.on("-w", "--wip", "Fail if there are any passing outcomes.") do
             @options[:wip] = true
           end
-          opts.on("-v", "--verbose", "Show the files and features loaded.") do
+          opts.on("-v", "--verbose", "Show the files and goals loaded.") do
             @options[:verbose] = true
           end
           opts.on("-g", "--guess", "Guess best match for Ambiguous steps.") do
@@ -250,8 +249,8 @@ module Cucumber
           end
           opts.on("--order TYPE[:SEED]", "Run examples in the specified order. Available types:",
             *<<-TEXT.split("\n")) do |order|
-  [defined]     Run scenarios in the order they were defined (default).
-  [random]      Shuffle scenarios before running.
+  [defined]     Run outcomes in the order they were defined (default).
+  [random]      Shuffle outcomes before running.
 Specify SEED to reproduce the shuffling from a previous run.
   e.g. --order random:5738
 TEXT
@@ -400,6 +399,8 @@ TEXT
         list_languages_and_exit
       end
 
+      # objective and problem are synonyms for a feature
+      # outcome and key results are synonyms for a scenario
       def list_keywords_and_exit(lang)
         require 'gherkin/dialect'
         language = ::Gherkin::Dialect.for(lang)

@@ -6,7 +6,7 @@ module Cucumber
     FILE_COLON_LINE_PATTERN = /^([\w\W]*?)(?::([\d:]+))?$/ #:nodoc:
 
     def initialize(file_specs)
-      Cucumber.logger.debug("Features:\n")
+      Cucumber.logger.debug("Objectives:\n")
       @file_specs = file_specs.map { |s| FileSpec.new(s) }
       Cucumber.logger.debug("\n")
     end

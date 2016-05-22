@@ -259,7 +259,7 @@ module Cucumber
 
     def require_dirs
       if @options[:require].empty?
-        default_features_paths + Dir['vendor/{gems,plugins}/*/cucumber']
+        default_features_paths + Dir['vendor/{gems,plugins}/*/mobiusloop']
       else
         @options[:require]
       end

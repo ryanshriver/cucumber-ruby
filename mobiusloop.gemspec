@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'mobiusloop'
-  s.version     = '0.1.1.pre'
+  s.version     = File.read(File.expand_path("../lib/mobiusloop/version", __FILE__))
   s.authors     = ["Ryan Shriver"]
-  s.description = 'A framework for measuring and delivering value'
+  s.description = 'mobiusloop provides continuous feedback to people on whether they are building the right things'
   s.summary     = "mobiusloop-#{s.version}"
   s.email       = 'ryanshriver@mac.com'
   s.license     = 'MIT'

@@ -24,7 +24,7 @@ class Outcome
       start_time = Time.now
       @scale.record_measurement
       elapsed_time = (Time.now - start_time)
-      return "Success! found " + format_number(@scale.measurements.last) + " " + @name + " in #{elapsed_time.round(1)} seconds!"
+      return "Success! Measure is " + format_number(@scale.measurements.last) + " " + @name + " in #{elapsed_time.round(1)} seconds!"
     rescue Exception => e
       return "Error! Measurement failed with message: " + e.message
     end
@@ -33,10 +33,20 @@ class Outcome
   # used to report progress towards goals
   def report
     report = ""
-    report << status
+    # report << status
     report << report_progress
     report << report_remaining
     report
+  end
+
+  # format number for display (1000000 => 1,000,000)
+  # unless number starts with 0 or .
+  def format_number(measure)
+    if measure != nil || measure.value != nil
+      whole, decimal = measure.value.to_s.split(".")
+      whole_with_commas = whole.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+      [whole_with_commas, decimal].compact.join(".")
+    end
   end
 
   private
@@ -61,7 +71,11 @@ class Outcome
 
   # report remaining progress towards the target
   def report_remaining
-    "#{percent_remaining.round(0)}% remaining to target in #{remaining_days} days\n"
+    if percent_remaining.round(0) <= 0
+      "Target achieved!"
+    else
+      "#{percent_remaining.round(0)}% remaining to target in #{remaining_days} days\n"
+    end
   end
 
   # percentage progress towards target as of now
@@ -89,11 +103,6 @@ class Outcome
   # days remaining until target date
   def remaining_days
     (DateTime.parse(target_date) - DateTime.now).to_i
-  end
-
-  # format number for display (1000000 => 1,000,000)
-  def format_number(measure)
-    measure.value.to_s.gsub(/(\d{3})(?=\d)/, '\\1,') unless measure == nil
   end
 
 end
