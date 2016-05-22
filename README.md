@@ -22,7 +22,7 @@ tests in a simple, readable format using the [Gherkin](https://cucumber.io/docs/
 on the quality of their product.
 
 `mobiusloop` takes this concept and applies it to strategic business and product goals. Instead of tests that report on
-product quality when run, `mobiusloop` reports on progress towards desired goals.
+product quality, `mobiusloop` reports on progress towards desired goals.
 
 Under the covers `mobiusloop` is built on [Cucumber](http://cucumber.io) and consists of three main parts:
  1. `.goal` files
@@ -63,7 +63,7 @@ The syntax is based [Gherkin](https://cucumber.io/docs/reference), the language 
 
 Each `.goal` file contains **one** Objective or Problem and **one or more** Outcomes or Key Results.
 
-When the `.goal` files are run from a command line, they report progress towards your targets like this:
+When the `.goal` files are run, they report progress towards your targets like this:
 
 ```ruby
 Objective: Top a million paying customers by Q3 2016!
@@ -79,7 +79,7 @@ Objective: Top a million paying customers by Q3 2016!
       36% remaining to target in 143 days
 ````
 
-Progress is reported as text or optionally saved in a [web page](results.html) for sharing.
+Progress is reported as text or optionally saved in a web page for sharing.
 
 With `mobiusloop` teams can measure progress towards their goals daily, weekly, monthly or whatever cadence makes sense.
 Integrating `mobiusloop` into your continuous delivery pipeline helps measure the impacts of each new release on your outcomes or key results.
@@ -101,7 +101,7 @@ Teams can either use `mobius_steps.rb` or create their own step definitions.
 #### 3. custom `Scale`'s
 
 At creation time, each outcome (or key result) is associated with a custom `Scale` of measure.
-`Scale`'s are the code that collects your data in your environment to report progress.
+Scale's are the code that collects your data in your environment to report progress.
 `mobiusloop` ships with a few example scales, however teams are encouraged to create custom scales to meet their needs.
 
 To create a Scale, create a new Ruby class that extends `Scale` and then implement the `measure` method. Next, update the `.goal`
@@ -111,7 +111,7 @@ To create a Scale, create a new Ruby class that extends `Scale` and then impleme
 
 it creates a new instance of the Ruby class `TotalReadersScale` and calls the `measure` method, which returns a new `Measure`.
 
-In this example, you would implement the method `collect_total_readers` with your custom logic.
+Here's an example:
 
 ```Ruby
 require 'mobiusloop/scale'
@@ -125,6 +125,8 @@ class TotalReadersScale < Scale
   end
 end
 ````
+
+You would implement the method `collect_total_readers` with your custom logic.
 
 
 ## getting started
@@ -147,7 +149,7 @@ Once installed, create a symbolic link for the `mobiusloop` command. First locat
 Look for the value of `EXECUTABLE DIRECTORY`, something like `/usr/local/Cellar/ruby/2.2.3/bin/`.
 Then create a symbolic link:
 
-    $ ln -s </path/to/executable/directory/mobiusloop /usr/local/bin/mobiusloop
+    $ ln -s /path/to/executable/directory/mobiusloop /usr/local/bin/mobiusloop
 
 **TODO:** Find a way to create symbolic link as part of gem install to remove this manual step
 
@@ -175,9 +177,9 @@ If all goes well, you get feedback that `mobiusloop` is running for your product
 ## create your first .goal
 
 First, open `goals/increase_readers.goal` in a text editor, change the baseline or target value, save and run again.
-Did you notice changes in the progress and status? Change the baseline and target dates and try again. Getting the hang of it?
+Did you notice changes in the progress? Change the baseline or target dates and try again. Getting the hang of it?
 
-Now let's pretend you have a product outcome to **improve response time** for your product from 4.5 seconds to 1 second.
+Now let's pretend you have a product outcome to **improve response time** for your product from 5 seconds to 1 second.
 Start by copying our working example:
 
     $ cp goals/increase_readers.goal goals/improve_response_time.goal
@@ -187,15 +189,15 @@ Start by copying our working example:
 
 Open the new `improve_response_time.goal` in your text editor and make some changes:
 
- - Update `Objective:` to reflect our new goal. How about <i>Improve our digital customer experience this year</i>.
+ - Update `Objective:` to reflect our new goal. How about **Improve our digital customer experience this year**.
  - Let's only start with one `Outcome`, so delete from `Outcome: Increase Published Articles by 25%` to the end of the file
- - Now update your `Outcome:` keeping it short and sweet. Something like <i>Improve Response Time</i>
+ - Now update your `Outcome:` keeping it short and sweet. How about **Improve Response Time**
 
 Now save the file and run again:
 
     $ mobiusloop
 
-This runs all the `.goal` files to `goals/` folder. We can just run our new one with this command:
+This runs all the `.goal` files in the `goals/` folder. We can just run our new one with this command:
 
     $ mobiusloop goals/improve_response_time.goal
 
@@ -211,7 +213,7 @@ Let's pretend as of October 1, 2015 your app's home page takes 5 seconds to load
 
  - In the row starting with `Given`, change 50000 to 5 and "readers" to "seconds"
 
-Your product owner has said <i>sub-second</i> is their goal. That's your target. Make another change:
+Your product owner has requested <i>sub-second response time</i>. That's your target. Make another change:
 
  - In the row starting with `And`, change 1000000 to 1 and "readers" to "second"
 
@@ -232,7 +234,7 @@ Now save the file and run again.
 
     $ mobiusloop
 
-Wow, much better! The "Page Response Scale" requested google.com and compared the response time to your target.
+Wow, much better! The "Page Response Scale" generated a request to [google.com](http://google.com) and compared the response time to your target of 1 second.
 
 How did you do? Did you hit the target?
 
@@ -281,17 +283,17 @@ class MyCustomScale < Scale
 
 end
 ```
-This code lives in `my_custom.scale.rb`.
+This code lives in `goals/step_definitions/my_custom.scale.rb`.
 Replace the line `total = fetch_your_total` with your custom logic.
 The last line `Measure.new(total)` returns a new measure.
 
 We recommend writing unit tests around any custom scales you create to ensure they work as expected before integrating with `mobiusloop`
 
-To run a single `.goal`, try this:
+Remember, to run a single `.goal` do this:
 
     $ mobiusloop goals/your_objective.goal
 
-Where `your_objective.goal` is the name of your custom goal. You can run all the `.goal` files in `/goals` folder with this:
+Where `your_objective.goal` is the name of your custom goal. To run all `.goal`'s do this:
 
     $ mobiusloop
 
@@ -302,11 +304,18 @@ Because `mobiusloop` is an extension of [Cucumber](http://cucumber.io), there ar
 exist in `mobiusloop`. A few examples:
 
 **Tags** - Use tags to create logical groups of Objectives, Problems, Outcomes or Key Results that you want run together.
-For example, adding `@mytag` to the line immediately above a definition and running it with:
+For example, add `@performance` to the line immediately above a definition:
 
-    $ mobiusloop --tags @mytag
+```ruby
+@performance
+Problem: Slow app response times are causing us to lose customers
 
-Will only run those Objectives, Problems, Outcomes or Key Results associated with that tag.
+```
+Then run with this:
+
+    $ mobiusloop --tags @performance
+
+Only those definitions with the @performance tag are run.
 
 **Reports** - By default `mobiusloop` outputs the results to the command line. But you can also output reports in HTML,
 JSON or other formats. See [Cucumber reports](https://cucumber.io/docs/reference#reports) for more details.
@@ -322,10 +331,10 @@ If you downloaded the source code to `/workspace/mobiusloop-ruby`, you can run t
 
 ## Report Defects
 
-See a missing test or found a defect? [Let us know](https://github.com/ryanshriver/mobius/issues) by creating a new issue.
+See a missing test or found a defect? [Let us know](https://github.com/ryanshriver/mobiusloop-ruby/issues) by creating a new issue.
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mobius.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ryanshriver/mobiusloop-ruby
 
