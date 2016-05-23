@@ -131,7 +131,7 @@ You would implement the method `collect_total_readers` with your custom logic.
 
 ## getting started
 
-Adding `mobiusloop` to your product is easy, but requires some command-line chops.
+Adding `mobiusloop` to your product is easy, but requires some command-line chops and about 20 minutes of your time.
 If this section looks like Greek, then as nicely as possible ask a developer on your team for help.
 
 **Note:** Currently only Ruby on Linux and OSX are tested platforms. Windows will be added in the future.
@@ -151,7 +151,7 @@ Then create a symbolic link:
 
     $ ln -s /path/to/executable/directory/mobiusloop /usr/local/bin/mobiusloop
 
-**TODO:** Find a way to create symbolic link as part of gem install to remove this manual step
+**TODO:** Simplify to find a way to create symbolic link as part of gem install
 
 
 ## adding mobiusloop to your app
@@ -284,8 +284,8 @@ class MyCustomScale < Scale
 end
 ```
 This code lives in `goals/step_definitions/my_custom.scale.rb`.
-Replace the line `total = fetch_your_total` with your custom logic.
-The last line `Measure.new(total)` returns a new measure.
+The line `total = fetch_your_total` would be replaced with your custom logic.
+The last line `Measure.new(total)` returns a new measure, as required by all Scale subclasses.
 
 We recommend writing unit tests around any custom scales you create to ensure they work as expected before integrating with `mobiusloop`
 
@@ -293,7 +293,7 @@ Remember, to run a single `.goal` do this:
 
     $ mobiusloop goals/your_objective.goal
 
-Where `your_objective.goal` is the name of your custom goal. To run all `.goal`'s do this:
+To run all `.goal`'s do this:
 
     $ mobiusloop
 
@@ -321,20 +321,26 @@ Only those definitions with the @performance tag are run.
 JSON or other formats. See [Cucumber reports](https://cucumber.io/docs/reference#reports) for more details.
 
 
-## Testing
+## further reading
+
+I have personally found [The Cucumber Book](https://pragprog.com/book/hwcuc/the-cucumber-book) a great reference and
+ worthy of purchase if you would like to get the most of out `mobiusloop`, given the Cucumber roots.
+ [Cucumber.io](http://cucumber.io) is also a great reference I use.
+
+## tests
 
 `mobiusloop` is built using a test-first approach. We're proud of our tests, but we're always looking to add more.
 If you downloaded the source code to `/workspace/mobiusloop-ruby`, you can run the tests using this command from the source code folder:
 
-    $ rake spec
+    $ rspec spec/mobiusloop/
 
 
-## Report Defects
+## defects
 
 See a missing test or found a defect? [Let us know](https://github.com/ryanshriver/mobiusloop-ruby/issues) by creating a new issue.
 
 
-## Contributing
+## contribute
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ryanshriver/mobiusloop-ruby
 
