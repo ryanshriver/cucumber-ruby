@@ -3,6 +3,7 @@ module Cucumber
   # Generates generic file structure for a cucumber project
   class ProjectInitializer
     def run
+      @version = File.read(File.expand_path("../lib/mobiusloop/version", __FILE__))
       # normal cucumber init, replacing /features for /goals
       create_directory('goals')
       create_directory('goals/step_definitions')
@@ -10,7 +11,9 @@ module Cucumber
       create_file('goals/support/env.rb')
 
       # extra mobiusloop initiialization
-      copy_step_defs('mobius_steps.rb', 'goals/step_definitions') # install mobius_steps.rb step definition
+      copy_step_defs('mobius_steps.rb', 'goals/step_definitions')
+      copy_step_defs('hooks.rb', 'goals/support')
+      copy_step_defs('config/config.yml', 'goals/support')
       copy_step_defs('scales/page_response_scale.rb', 'goals/step_definitions') # example scale to measure response time
       copy_gherkin_languages('gherkin-languages.json')    # copy modified gherkin-languages.json file to gherkin gem(s)
       copy_example_file('total_articles_scale.rb', 'goals/step_definitions')
@@ -22,22 +25,22 @@ module Cucumber
 
     def copy_step_defs(spec_file, target)
       gem_dir = `gem environment gemdir`
-      steps_file = gem_dir.gsub("\n","") + "/gems/mobiusloop-?.?.?/lib/mobiusloop/" + spec_file
+      steps_file = gem_dir.gsub("\n","") + "/gems/mobiusloop-#{@version}/lib/mobiusloop/" + spec_file
       report_copying(spec_file, target)
       copy_file(steps_file, target)
     end
 
     def copy_gherkin_languages(gherkin_file)
       gem_dir = `gem environment gemdir`
-      source_gherkin = gem_dir.gsub("\n","") + "/gems/mobiusloop-?.?.?/" + gherkin_file
-      target_gherkin = gem_dir.gsub("\n","") + "/gems/gherkin-?.?.?/lib/gherkin/"
+      source_gherkin = gem_dir.gsub("\n","") + "/gems/mobiusloop-#{@version}/" + gherkin_file
+      target_gherkin = gem_dir.gsub("\n","") + "/gems/gherkin-#{@version}/lib/gherkin/"
       report_copying(gherkin_file, target_gherkin)
       copy_file(source_gherkin, target_gherkin)
     end
 
     def copy_example_file(file, target)
       gem_dir = `gem environment gemdir`
-      steps_file = gem_dir.gsub("\n","") + "/gems/mobiusloop-?.?.?/examples/mobiusloop/" + file
+      steps_file = gem_dir.gsub("\n","") + "/gems/mobiusloop-#{@version}/examples/mobiusloop/" + file
       report_copying(file, target)
       copy_file(steps_file, target)
     end
@@ -63,7 +66,6 @@ module Cucumber
                   end
 
       report_exists(file_name) || return if File.exists?(file_name)
-
       report_creating(file_name)
       FileUtils.send file_type, file_name
     end

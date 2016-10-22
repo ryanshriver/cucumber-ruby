@@ -30,3 +30,4 @@ tags
 .ruby-version
 .project
 *.gem
+vendor

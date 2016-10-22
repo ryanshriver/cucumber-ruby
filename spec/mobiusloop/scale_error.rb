@@ -7,7 +7,6 @@ class ScaleError < Scale
 
   def initialize
     super
-    @counter = 0
   end
 
   # simulate something bad happening during measurement that raises and error
