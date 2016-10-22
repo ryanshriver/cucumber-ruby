@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
 
   # Added by Mobius
   s.add_dependency 'colorize', '~> 0.8.1'
-  s.add_dependency 'rspec', '>= 3.0'
+# s.add_dependency 'rspec', '>= 3.0'
 
   s.rubygems_version = ">= 1.6.1"
   s.files            = `git ls-files`.split("\n").reject {|path| path =~ /\.gitignore$/ }
