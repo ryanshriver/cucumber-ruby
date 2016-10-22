@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coveralls', '~> 0.7'
   s.add_development_dependency 'syntax', '>= 1.0.0'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'rspec', '>= 3.0'
 
   # For Documentation:
   s.add_development_dependency 'bcat', '~> 0.6.2'
@@ -39,7 +40,6 @@ Gem::Specification.new do |s|
 
   # Added by Mobius
   s.add_dependency 'colorize', '~> 0.8.1'
-# s.add_dependency 'rspec', '>= 3.0'
 
   s.rubygems_version = ">= 1.6.1"
   s.files            = `git ls-files`.split("\n").reject {|path| path =~ /\.gitignore$/ }
