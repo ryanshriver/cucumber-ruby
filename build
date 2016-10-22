@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rspec spec/mobiusloop/
+gem build mobiusloop.gemspec
+gem install mobiusloop-0.1.5.gem --no-ri --no-doc
+
+bundle install

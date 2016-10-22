@@ -46,7 +46,7 @@ module Cucumber
         @err.puts("Couldn't open #{e.path}")
         exit_unable_to_finish
       rescue FeatureFolderNotFoundException => e
-        @err.puts(e.message + ". You can use `mobiusloop --init` to get started.")
+        @err.puts("Could not find goals directory. Try this: mobiusloop --init")
         exit_unable_to_finish
       rescue ProfilesNotDefinedError, YmlLoadError, ProfileNotFound => e
         @err.puts(e.message)

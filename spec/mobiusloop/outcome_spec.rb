@@ -52,3 +52,8 @@ describe 'Outcome Number Format' do
     expect(outcome.format_number(Measure.new(4.5))).to eql("4.5")
   end
 end
+
+# helper method to generate filename for testing
+def create_expected_filename
+  "#{Time.now.strftime(Outcome::FILENAME)}"
+end
