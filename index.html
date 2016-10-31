@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>building the right things with mobius by ryanshriver</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>building the right things with mobius</h1>
+          <h2>mobiusloop provides continuous feedback to people on whether they are building the right things</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ryanshriver/mobiusloop-ruby/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ryanshriver/mobiusloop-ruby/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ryanshriver/mobiusloop-ruby" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p><a href="https://badge.fury.io/rb/mobiusloop"><img src="https://badge.fury.io/rb/mobiusloop@2x.svg" alt="Gem Version"></a> <a href="https://circleci.com/gh/ryanshriver/mobiusloop-ruby"><img src="https://circleci.com/gh/ryanshriver/mobiusloop-ruby.svg?style=shield&amp;circle-token=eb1000f0a1ead99dfccea820d3c368b097556c03" alt="CircleCI"></a></p>
+
+<h1>
+<a id="building-the-right-things-with-mobius" class="anchor" href="#building-the-right-things-with-mobius" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>building the right things with mobius</h1>
+
+<p><code>mobius</code> provides continuous feedback to people on whether they are <strong>building the right things</strong>, not just <strong>building things right</strong>.</p>
+
+<p>Most product development tools focus on <strong>building things right</strong> meaning on time, on budget and with high quality.
+<code>mobius</code> is different. It uses a simple language to define the desired business and product goals, such as Increase
+Customer Conversion or Improve App Responsiveness. Then <code>mobius</code> uses automation to measure and report on progress
+towards these goals whenever you want.</p>
+
+<p>With <code>mobius</code> teams get realtime feedback on whether their new features are delivering the expected value. Leaders get
+clear visibility on whether their investments are delivering the desired return. Everyone gets feedback on whether they are
+<strong>building the right things</strong>.</p>
+
+<p>Use <code>mobius</code> with our method <a href="http://mobiusloop.com">Mobius</a> and other methods like
+<a href="https://www.amazon.com/Radical-Focus-Achieving-Important-Objectives-ebook/dp/B01BFKJA0Y">Objectives and Key Results (OKR's)</a>
+to define and measure the value of your product or service.</p>
+
+<h2>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>how it works</h2>
+
+<p>Today many teams write automated feature tests using open source tools like <a href="http://cucumber.io">Cucumber</a>. They write these
+tests in a simple, readable format using the <a href="https://cucumber.io/docs/reference">Gherkin</a> language. Whenever these tests are run, teams get realtime feedback
+on the quality of their product.</p>
+
+<p><code>mobius</code> builds up this concept to apply automation towards product goals and business objectives. Instead of tests that report on
+product quality, <code>mobius</code> reports on progress towards desired goals.</p>
+
+<p>Under the covers <code>mobius</code> is built on the popular open source testing tool <a href="http://cucumber.io">Cucumber</a>. It consists of three main parts:</p>
+
+<ol>
+<li>
+<code>.goal</code> files</li>
+<li>step definitions</li>
+<li>custom <code>Scale</code>'s</li>
+</ol>
+
+<h4>
+<a id="1-goal-files" class="anchor" href="#1-goal-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. <code>.goal</code> files</h4>
+
+<p>To start, leaders and teams agree on their objectives and the measurable outcomes that define success.
+Frameworks like <a href="https://www.amazon.com/Radical-Focus-Achieving-Important-Objectives-ebook/dp/B01BFKJA0Y">Objectives and Key Results (OKR's)</a>
+and <a href="http://mobiusloop.com">Mobius</a> encourage qualitative statements (problems or objectives) together with quantitative
+measures of success (outcomes or key results).</p>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-c1">Objective:</span> <span class="pl-c1">Reach</span> a million paying customers by <span class="pl-c1">Q3</span> <span class="pl-c1">2016</span>!
+
+  <span class="pl-c1">Key</span> <span class="pl-c1">Result:</span> <span class="pl-c1">Increase</span> <span class="pl-c1">Journal</span> <span class="pl-c1">Readership</span>
+    <span class="pl-c1">Given</span> a baseline of <span class="pl-c1">500</span>,<span class="pl-c1">000</span> readers on <span class="pl-c1">Oct</span> <span class="pl-c1">1</span>, <span class="pl-c1">2015</span>
+    <span class="pl-c1">And</span> a target of <span class="pl-c1">1</span>,<span class="pl-c1">000</span>,<span class="pl-c1">000</span> readers by <span class="pl-c1">Oct</span> <span class="pl-c1">1</span>, <span class="pl-c1">2016</span>
+    <span class="pl-c1">Then</span> measure progress with <span class="pl-s"><span class="pl-pds">"</span>Total Readers Scale<span class="pl-pds">"</span></span></pre></div>
+
+<p>Here's another one:</p>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-c1">Problem:</span> <span class="pl-c1">Slow</span> app response times are causing us to lose customers
+
+  <span class="pl-c1">Outcome:</span> <span class="pl-c1">Improve</span> <span class="pl-c1">App</span> <span class="pl-c1">Responsiveness</span>
+    <span class="pl-c1">Given</span> a baseline of <span class="pl-c1">4.5</span> seconds average response time on <span class="pl-c1">May</span> <span class="pl-c1">1</span>, <span class="pl-c1">2016</span>
+    <span class="pl-c1">And</span> a target of <span class="pl-c1">1.5</span> seconds average response time by <span class="pl-c1">Jun</span> <span class="pl-c1">30</span>, <span class="pl-c1">2016</span>
+    <span class="pl-c1">Then</span> measure progress with <span class="pl-s"><span class="pl-pds">"</span>Peak User Performance Scale<span class="pl-pds">"</span></span></pre></div>
+
+<p>The syntax is based <a href="https://cucumber.io/docs/reference">Gherkin</a>, the language used to write Cucumber acceptance tests.
+<code>mobius</code> introduces a four new keywords to Gherkin: <strong>Objective</strong>, <strong>Problem</strong>, <strong>Outcome</strong> and <strong>Key Result</strong>.</p>
+
+<p>Each <code>.goal</code> file contains <strong>one</strong> Objective or Problem and <strong>one or more</strong> Outcomes or Key Results.</p>
+
+<p>When the <code>.goal</code> files are run with <code>mobius</code>, they report progress towards your targets like this:</p>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-c1">Objective:</span> <span class="pl-c1">Top</span> a million paying customers by <span class="pl-c1">Q3</span> <span class="pl-c1">2016</span>!
+
+  <span class="pl-c1">Key</span> <span class="pl-c1">Result:</span> <span class="pl-c1">Increase</span> <span class="pl-c1">Journal</span> <span class="pl-c1">Readership</span> to <span class="pl-c1">1</span>,<span class="pl-c1">000</span>,<span class="pl-c1">000</span>
+    <span class="pl-c1">Given</span> a baseline of <span class="pl-c1">500000</span> readers on <span class="pl-s"><span class="pl-pds">"</span>Oct 1, 2015<span class="pl-pds">"</span></span>
+    <span class="pl-c1">And</span> a target of <span class="pl-c1">1000000</span> readers by <span class="pl-s"><span class="pl-pds">"</span>Oct 1, 2016<span class="pl-pds">"</span></span>
+    <span class="pl-c1">When</span> we measure progress with <span class="pl-s"><span class="pl-pds">"</span>Total Readers Scale<span class="pl-pds">"</span></span>
+      <span class="pl-c1">Success</span>! found <span class="pl-c1">820</span>,<span class="pl-c1">000</span> readers <span class="pl-k">in</span> <span class="pl-c1">1.2</span> seconds!
+    <span class="pl-c1">Then</span> measure progress with <span class="pl-s"><span class="pl-pds">"</span>Total Readers Scale<span class="pl-pds">"</span></span>
+      <span class="pl-c1">Hooray</span>! <span class="pl-c1">You</span> are on track!
+      <span class="pl-c1">64</span><span class="pl-k">%</span> progress to target using <span class="pl-c1">61</span><span class="pl-k">%</span> of the time (<span class="pl-c1">222</span> days)
+      <span class="pl-c1">36</span><span class="pl-k">%</span> remaining to target <span class="pl-k">in</span> <span class="pl-c1">143</span> days</pre></div>
+
+<p>Progress is reported on the screen an optionally saved to a file.</p>
+
+<p>With <code>mobius</code> teams can measure progress towards their goals daily, weekly, monthly or whatever cadence makes sense.
+Integrating <code>mobius</code> into your continuous delivery pipeline helps measure the impacts of each new release on your outcomes or key results.</p>
+
+<h4>
+<a id="2-step-definitions" class="anchor" href="#2-step-definitions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. step definitions</h4>
+
+<p>Under the covers, <code>mobius</code> is built on a forked copy of <a href="https://github.com/cucumber/cucumber-ruby">cucumber-ruby</a>.
+It uses Gherkin to parse the <code>.goal</code> files and call Cucumber <a href="https://github.com/cucumber/cucumber/wiki/Step-Definitions">step definitions</a>.
+<code>mobius</code> ships with one step definition <a href="lib/mobiusloop/mobius_steps.rb">mobius_steps.rb</a> that can be modified or extended.</p>
+
+<p>Inside <code>mobius_steps.rb</code>, the lines beginning with <code>Given</code> and <code>And</code> save the baseline and target values, respectively.
+The line beginning with <code>When</code> creates an <code>Outcome</code> with a custom <code>Scale</code>, sets the baselines and targets, then calls
+the <code>measure</code> method to perform the measurement. The line beginning with <code>Then</code> reports the progress towards targets.</p>
+
+<p>This <code>Given, When, Then</code> syntax is identical to Gherkin, easing the learning curve for teams already using Cucumber.
+Teams can choose to use the built-in <code>mobius_steps.rb</code> or create their own step definitions.</p>
+
+<h4>
+<a id="3-custom-scales" class="anchor" href="#3-custom-scales" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. custom <code>Scale</code>'s</h4>
+
+<p>At creation time, each outcome (or key result) is associated with a custom <code>Scale</code> of measure.
+Scale's are the code that collects your data in your environment to report progress.
+<code>mobius</code> ships with a few example scales, however teams are encouraged to create custom scales to meet their needs.</p>
+
+<p>To create a Scale, create a new Ruby class that extends <code>Scale</code> and then implement the <code>measure</code> method. Next, update the <code>.goal</code>
+ file to reference your new <code>Scale</code> class. When <code>mobius</code> parses this line:</p>
+
+<p><code>we measure progress with "Total Readers Scale"</code></p>
+
+<p>it creates a new instance of the Ruby class <code>TotalReadersScale</code> and calls the <code>measure</code> method, which returns a new <code>Measure</code>.</p>
+
+<p>Here's an example:</p>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>mobiusloop/scale<span class="pl-pds">'</span></span>
+<span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>mobiusloop/measure<span class="pl-pds">'</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">TotalReadersScale<span class="pl-e"> &lt; Scale</span></span>
+
+  <span class="pl-k">def</span> <span class="pl-en">measure</span>
+    total <span class="pl-k">=</span> collect_total_readers
+    <span class="pl-c1">Measure</span>.<span class="pl-k">new</span>(total)
+  <span class="pl-k">end</span>
+<span class="pl-k">end</span></pre></div>
+
+<p>In this example you would implement the method <code>collect_total_readers</code> with your custom logic.</p>
+
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>getting started</h2>
+
+<p>Adding <code>mobius</code> to your product is relatively easy, but requires some command-line chops and about 20 minutes of your time.
+If the following section looks like Greek, then as nicely as possible ask a developer on your team for help. Come bearing gifts!</p>
+
+<p><strong>Note:</strong> Currently only Ruby on Linux and OSX are tested platforms. Windows will be added in the future.</p>
+
+<p>If <a href="https://www.ruby-lang.org/en/">Ruby</a>, <a href="https://rubygems.org">gem</a> and <a href="http://bundler.io">bundle</a> are not installed, install them first.</p>
+
+<p>Then install <code>mobius</code> with this command:</p>
+
+<pre><code>$ gem install mobiusloop
+</code></pre>
+
+<p>Once installed, create a symbolic link for the <code>mobius</code> command. First locate your ruby executable path:</p>
+
+<pre><code>$ gem env
+</code></pre>
+
+<p>Look for the value of <code>EXECUTABLE DIRECTORY</code>, something like <code>/usr/local/Cellar/ruby/2.2.3/bin/</code>.
+Then create a symbolic link:</p>
+
+<pre><code>$ ln -s /path/to/executable/directory/mobius /usr/local/bin/mobius
+</code></pre>
+
+<p><strong>TODO:</strong> Simplify to find a way to create symbolic link as part of gem install</p>
+
+<h2>
+<a id="adding-mobius-to-your-app" class="anchor" href="#adding-mobius-to-your-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>adding mobius to your app</h2>
+
+<p>To create and run your own goals, let's start with a working example and modify it.</p>
+
+<p>Change to the root directory of your app and run <code>mobius</code>:</p>
+
+<pre><code>$ cd product_root_directory
+$ mobius
+</code></pre>
+
+<p>You get feedback that <code>mobius</code> is not initialized. So let's do that:</p>
+
+<pre><code>$ mobius --init
+</code></pre>
+
+<p><code>mobius</code> creates a <code>goals/</code> directory and put some files in there. Let's run it again:</p>
+
+<pre><code>$ mobius
+</code></pre>
+
+<p>You got feedback that <code>mobius</code> is running for your product!</p>
+
+<p>If you get an error instead, attempt to debug the issue and <a href="https://github.com/ryanshriver/mobiusloop-ruby/issues">let us know</a>
+so we can fix it.</p>
+
+<p>Now let's customize <code>mobius</code> for your needs.</p>
+
+<h1>
+<a id="create-your-first-goal" class="anchor" href="#create-your-first-goal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>create your first goal</h1>
+
+<p>Mobius ships with a working goal to get you started.</p>
+
+<p>Open <code>goals/increase_readers.goal</code> in your favorite text editor,
+change the <em>baseline</em> or <em>target value</em>. Save and run <code>mobius</code> again. Notice changes in the progress?</p>
+
+<p>Change the <em>baseline</em> or <em>target dates</em> and run <code>mobius</code> again. See more changes? Getting the hang of it?</p>
+
+<p>As you experiment you may notice the progress being displayed in green, yellow or red font color.
+In addition to the quantitative progress, <code>mobius</code> reports on whether you are <em>on track</em>. All this is configurable
+but more on that later.</p>
+
+<h4>
+<a id="step-1-create-goal-file" class="anchor" href="#step-1-create-goal-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 1: create .goal file</h4>
+
+<p>Let's pretend you have a product outcome to <strong>improve response time</strong> for your product from 5 seconds to 1 second.
+Start by copying our working example:</p>
+
+<pre><code>$ cp goals/increase_readers.goal goals/improve_experience.goal
+</code></pre>
+
+<h4>
+<a id="step-2-create-objectives-and-outcomes" class="anchor" href="#step-2-create-objectives-and-outcomes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 2: create objectives and outcomes</h4>
+
+<p>Open <code>improve_experience.goal</code> in your text editor and make some changes:</p>
+
+<ol>
+<li>Update <code>Objective:</code> to reflect our new goal. How about <code>Improve our digital customer experience this year</code>
+</li>
+<li>Let's only start with one <code>Outcome</code>, so delete from <code>Outcome: Increase Published Articles by 25%</code> to the end of the file</li>
+<li>Now update your <code>Outcome:</code> keeping it short and sweet. How about <code>Improve Response Time</code>
+</li>
+</ol>
+
+<p>When done it should look like this:</p>
+
+<pre><code>Objective: Improve our digital customer experience this year
+
+ Outcome: Improve Response Time
+    Given a baseline of 500000 "readers" on "Oct 1, 2016"
+    And a target of 1000000 "readers" by "Oct 1, 2017"
+    Then measure progress with "Total Readers Scale"
+</code></pre>
+
+<p>Save your new goal and run <code>mobuis</code> again. Notice that <code>mobius</code> runs all the <code>.goal</code> files in the <code>goals/</code> folder by default.
+We can just run our new one with this command:</p>
+
+<pre><code>$ mobius goals/improve_experience.goal
+</code></pre>
+
+<p>Since we don't need the example anymore, let's remove it:</p>
+
+<pre><code>$ rm goals/increase_readers.goal
+</code></pre>
+
+<h4>
+<a id="step-3-define-baselines-and-targets" class="anchor" href="#step-3-define-baselines-and-targets" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 3: define baselines and targets</h4>
+
+<p>Let's pretend as of October 1, 2016 your app's home page takes 5 seconds to load. That's your baseline.
+Since your product owner has requested <em>sub-second response time</em>, that's your target.</p>
+
+<p>Open <code>improve_experience.goal</code> in your text editor and make some changes:</p>
+
+<ol>
+<li>In the row starting with <code>Given</code>, change <code>50000</code> to <code>5</code> and <code>readers</code> to <code>seconds</code>
+</li>
+<li>In the row starting with <code>And</code>, change <code>1000000</code> to <code>1</code> and <code>readers</code> to <code>second</code>
+</li>
+</ol>
+
+<p>When done it should look like this:</p>
+
+<pre><code>Objective: Improve our digital customer experience this year
+
+ Outcome: Improve Response Time
+    Given a baseline of 5 "seconds" on "Oct 1, 2016"
+    And a target of 1 "second" by "Oct 1, 2017"
+    Then measure progress with "Total Readers Scale"
+</code></pre>
+
+<p>Now save the file and run <code>mobius</code> again.</p>
+
+<p>This works, but we have <em>820,000 seconds!</em> That's not right, so let's fix it.</p>
+
+<h4>
+<a id="step-4-define-scales" class="anchor" href="#step-4-define-scales" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 4: define scales</h4>
+
+<p>Open <code>improve_experience.goal</code> in your text editor and make some changes:</p>
+
+<ol>
+<li>In the row starting with <code>When</code>, change "Total Readers Scale" to "Page Response Scale"</li>
+</ol>
+
+<p>When done it should look like this:</p>
+
+<pre><code>Objective: Improve our digital customer experience this year
+
+ Outcome: Improve Response Time
+    Given a baseline of 5 "seconds" on "Oct 1, 2016"
+    And a target of 1 "second" by "Oct 1, 2017"
+    Then measure progress with "Page Response Scale"
+</code></pre>
+
+<p>Now save the file and run <code>mobius</code> again.</p>
+
+<p>Wow, much better! The <em>Page Response Scale</em> generated a request to <a href="http://google.com">google.com</a> and compared the
+response time to your target of 1 second. It reported what percentage progress you had made to your
+target in your scheduled time. The color text indicates whether you are on track or not.</p>
+
+<p>Hopefully by now you know how to edit a <code>.goal</code> file with confidence and run them to report
+progress towards your objectives and outcomes. But unless all of your goals are related to page
+response time, you'll need to customize <code>mobius</code> to meet your needs.</p>
+
+<h1>
+<a id="mobius-development-guide" class="anchor" href="#mobius-development-guide" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mobius development guide</h1>
+
+<p>Customizing <code>mobius</code> for your product is a 3 step process:</p>
+
+<h4>
+<a id="step-1-create-a-new-goal-file-in-the-goals-directory" class="anchor" href="#step-1-create-a-new-goal-file-in-the-goals-directory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 1: create a new .goal file in the goals/ directory</h4>
+
+<p>We recommend copying a working example and modifying to meet your needs. For the .goal filename, we recommend naming it
+after your objective or problem statement. Something like this:</p>
+
+<pre><code>$ cp goals/increase_readers.goal goals/improve_quality.goal
+</code></pre>
+
+<p>Add your objectives, outcomes and the correct target and baseline values. When done, do a <em>dry run</em>:</p>
+
+<pre><code>$ mobius goals/improve_quality.goal --dry-run
+</code></pre>
+
+<p>Dry runs valid the <code>.goal</code> syntax is correct without actually running the scales that measure progress. Ensure your
+syntax is valid before moving on.</p>
+
+<h4>
+<a id="step-3-create-a-new-scale" class="anchor" href="#step-3-create-a-new-scale" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 3: create a new Scale</h4>
+
+<p>Currently the only way to create a custom scale is to write some Ruby code. Specifically you must create a new Ruby class
+that extends the <code>Scale</code> class and implements a <code>measure</code> method. For example, if your .<code>goal</code> file contains
+"My Custom Scale", the Ruby class would be:</p>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>mobiusloop/scale<span class="pl-pds">'</span></span>
+<span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>mobiusloop/measure<span class="pl-pds">'</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">MyCustomScale<span class="pl-e"> &lt; Scale</span></span>
+
+  <span class="pl-k">def</span> <span class="pl-en">measure</span>
+    total <span class="pl-k">=</span> fetch_your_total
+    <span class="pl-c1">Measure</span>.<span class="pl-k">new</span>(total)
+  <span class="pl-k">end</span>
+
+<span class="pl-k">end</span></pre></div>
+
+<p>This class is saved to <code>goals/step_definitions/my_custom.scale.rb</code>. The line <code>total = fetch_your_total</code> would be replaced
+with your custom logic. The last line <code>Measure.new(total)</code> returns a new measure, as required by all Scales.</p>
+
+<p>We recommend writing unit tests around any custom scales you create to ensure they work as expected before integrating with <code>mobius</code>.</p>
+
+<p>TODO: Add methods to write custom Scales without writing Ruby. Pre-ship a few common ones.</p>
+
+<h4>
+<a id="step-3-configure-mobius" class="anchor" href="#step-3-configure-mobius" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>step 3: configure mobius</h4>
+
+<p>Certain features of <code>mobius</code> are configurable in the <code>goals/support/config.yml</code> file. Specifically:</p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">measures:</span>
+  <span class="pl-ent">save:</span> <span class="pl-c1">false</span></pre></div>
+
+<p>Setting this to <code>true</code> records each <code>mobius</code> run's progress in a small <code>.json</code> file inside the <code>goals/measures</code> directory.
+The name of the file is the timestamp of when it was run. If you would like to report on trending
+progress of your objectives and outcomes over time, you incorporate these values.</p>
+
+<p>TODO: Identify an relatively easy method to use these to report trending</p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">progress:</span>
+  <span class="pl-ent">good_percent:</span> <span class="pl-c1">10</span>
+  <span class="pl-ent">bad_percent:</span> <span class="pl-c1">30</span></pre></div>
+
+<p><code>mobius</code> reports progress in green, yellow or red font color to indicate whether you are on track to hit your target by the
+target date. This is configurable with the values <code>good_percent</code> and <code>bad_percent</code>.</p>
+
+<p>It is easiest to explain this with a picture:</p>
+
+<p><img src="/docs/mobius_progress.jpg" alt="mobius progress graph"></p>
+
+<p>You can adjust <code>good_percent</code> and <code>bad_percent</code> to adjust how you report progress.</p>
+
+<h2>
+<a id="advanced-features" class="anchor" href="#advanced-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>advanced features</h2>
+
+<p>Because <code>mobius</code> is an extension of <a href="http://cucumber.io">Cucumber</a>, there are many features in Cucumber that also
+exist in <code>mobius</code>. A few examples:</p>
+
+<p><strong>Tags</strong> - Use tags to create logical groups of Objectives, Problems, Outcomes or Key Results that you want run together.
+For example, add <code>@performance</code> to the line immediately above a definition:</p>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-smi">@performance</span>
+<span class="pl-c1">Problem:</span> <span class="pl-c1">Slow</span> app response times are causing us to lose customers
+</pre></div>
+
+<p>Then run with this:</p>
+
+<pre><code>$ mobius --tags @performance
+</code></pre>
+
+<p>Only those definitions with the <a href="https://github.com/performance" class="user-mention">@performance</a> tag are run.</p>
+
+<h2>
+<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>tests</h2>
+
+<p><code>mobius</code> is built using a test-first approach. We're proud of our tests, but we're always looking to add more.
+If you downloaded the source code to <code>/workspace/mobiusloop-ruby</code>, you can run the tests using this command from the source code folder:</p>
+
+<pre><code>$ rspec spec/mobiusloop/
+</code></pre>
+
+<h2>
+<a id="further-reading" class="anchor" href="#further-reading" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>further reading</h2>
+
+<p>I have personally found <a href="https://pragprog.com/book/hwcuc/the-cucumber-book">The Cucumber Book</a> a great reference and
+ worthy of purchase if you would like to get the most of out <code>mobius</code>.
+ <a href="http://cucumber.io">Cucumber.io</a> is also a reference I use.</p>
+        </section>
+
+        <footer>
+          building the right things with mobius is maintained by <a href="https://github.com/ryanshriver">ryanshriver</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
