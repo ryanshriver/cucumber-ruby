@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/mobiusloop@2x.svg)](https://badge.fury.io/rb/mobiusloop) [![CircleCI](https://circleci.com/gh/ryanshriver/mobiusloop-ruby.svg?style=shield&circle-token=eb1000f0a1ead99dfccea820d3c368b097556c03)](https://circleci.com/gh/ryanshriver/mobiusloop-ruby)
+
+
 # building the right things with mobius
 
 `mobius` provides continuous feedback to people on whether they are **building the right things**, not just **building things right**.
@@ -37,7 +40,6 @@ Frameworks like [Objectives and Key Results (OKR's)](https://www.amazon.com/Radi
 and [Mobius](http://mobiusloop.com) encourage qualitative statements (problems or objectives) together with quantitative
 measures of success (outcomes or key results).
 
-Using `mobius`, leaders and teams collaboratively write these in a `.goal` text file. Here's an example:
 
 ```ruby
 Objective: Reach a million paying customers by Q3 2016!
