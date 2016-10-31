@@ -3,7 +3,8 @@ module Cucumber
   # Generates generic file structure for a cucumber project
   class ProjectInitializer
     def run
-      @version = File.read(File.expand_path("../lib/mobiusloop/version", __FILE__))
+      puts "file expand path = #{File.expand_path(__FILE__)}"
+      @version = File.read(File.expand_path("../../../lib/mobiusloop/version", __FILE__))
       # normal cucumber init, replacing /features for /goals
       create_directory('goals')
       create_directory('goals/step_definitions')
@@ -30,10 +31,12 @@ module Cucumber
       copy_file(steps_file, target)
     end
 
+    # note: this is penned to v3.2.0 of gherkin because 4.0.0 was causing issues
+    # this is not very elegant, but works for now
     def copy_gherkin_languages(gherkin_file)
       gem_dir = `gem environment gemdir`
       source_gherkin = gem_dir.gsub("\n","") + "/gems/mobiusloop-#{@version}/" + gherkin_file
-      target_gherkin = gem_dir.gsub("\n","") + "/gems/gherkin-#{@version}/lib/gherkin/"
+      target_gherkin = gem_dir.gsub("\n","") + "/gems/gherkin-3.2.0/lib/gherkin/"
       report_copying(gherkin_file, target_gherkin)
       copy_file(source_gherkin, target_gherkin)
     end

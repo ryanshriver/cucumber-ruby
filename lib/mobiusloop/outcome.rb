@@ -82,9 +82,12 @@ class Outcome
     days = progress_days
     result = ""
 
-    if config.has_key?('progress') && config['progress'].has_key?('good') && config['progress'].has_key?('bad')
-      good = config['progress']['good'].to_i
-      bad = config['progress']['bad'].to_i
+    # TODO: FIX LOGIC, ADD MORE TEST CASES
+
+    if config.has_key?('progress') && config['progress'].has_key?('green_threshold') &&
+        config['progress'].has_key?('red_threshold')
+      good = config['progress']['green_threshold'].to_i
+      bad = config['progress']['red_threshold'].to_i
 
       if (delta <= good)
         result = "#{progress}% progress to target using #{schedule}% of the time (#{days} days)\n".colorize(:green)
@@ -99,22 +102,30 @@ class Outcome
 
   def report_remaining
     config = ConfigFile.load_template("#{Dir.pwd}/goals/support/config.yml")
-
     days_remaining = remaining_days
     remaining = percent_remaining.round(0)
-
     progress = percent_progress.round(0)
     schedule = percent_schedule.round(0)
     delta = (progress - schedule).abs
     result = ""
 
-    if config.has_key?('progress') && config['progress'].has_key?('good') && config['progress'].has_key?('bad')
-      good = config['progress']['good'].to_i
-      bad = config['progress']['bad'].to_i
+    if config.has_key?('progress') &&
+        config['progress'].has_key?('good_percent') &&
+        config['progress'].has_key?('bad_percent')
 
-      if (delta <= good)
+      good = config['progress']['good_percent'].to_i
+      bad = config['progress']['bad_percent'].to_i
+
+      # if delta is positive, green
+      # if delta is negative, but still within green threshold, green
+      # if delta is negative, and greater than red threshold, red
+      # else yellow
+
+      if (delta >= 0)
         result = "#{remaining}% remaining to target in #{days_remaining} days\n".colorize(:green)
-      elsif (delta >= bad)
+      elsif (delta < 0 && delta <= good)
+        result = "#{remaining}% remaining to target in #{days_remaining} days\n".colorize(:green)
+      elsif (delta < 0 && delta >= bad)
         result =  "#{remaining}% remaining to target in #{days_remaining} days\n".colorize(:red)
       else
         result =  "#{remaining}% remaining to target in #{days_remaining} days\n".colorize(:yellow)

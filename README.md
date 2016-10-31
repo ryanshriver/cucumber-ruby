@@ -159,118 +159,155 @@ To create and run your own goals, let's start with a working example and modify 
 
 Change to the root directory of your app and run `mobius`:
 
-    $ cd product_home
+    $ cd product_root_directory
     $ mobius
 
 You get feedback that `mobius` is not initialized. So let's do that:
 
     $ mobius --init
 
-`mobius` just created a `goals/` directory and put some files in there. Let's run it again:
+`mobius` creates a `goals/` directory and put some files in there. Let's run it again:
 
     $ mobius
 
-Hopefully you got feedback that `mobius` is running for your product! If not, attempt to debug the issues and
-if you're still stuck, [create an issue](https://github.com/ryanshriver/mobiusloop-ruby/issues).
+You got feedback that `mobius` is running for your product!
+
+If you get an error instead, attempt to debug the issue and [let us know](https://github.com/ryanshriver/mobiusloop-ruby/issues)
+so we can fix it.
 
 Now let's customize `mobius` for your needs.
 
 
-## create your first .goal
+# create your first goal
 
-First, open `goals/increase_readers.goal` in a text editor, change the baseline or target value, save and run again.
-Did you notice changes in the progress? Change the baseline or target dates and try again. Getting the hang of it?
+Mobius ships with a working goal to get you started.
 
-Now let's pretend you have a product outcome to **improve response time** for your product from 5 seconds to 1 second.
+Open `goals/increase_readers.goal` in your favorite text editor,
+change the *baseline* or *target value*. Save and run `mobius` again. Notice changes in the progress?
+
+Change the *baseline* or *target dates* and run `mobius` again. See more changes? Getting the hang of it?
+
+As you experiment you may notice the progress being displayed in green, yellow or red font color.
+In addition to the quantitative progress, `mobius` reports on whether you are *on track*. All this is configurable
+but more on that later.
+
+
+#### step 1: create .goal file
+
+Let's pretend you have a product outcome to **improve response time** for your product from 5 seconds to 1 second.
 Start by copying our working example:
 
-    $ cp goals/increase_readers.goal goals/improve_response_time.goal
+    $ cp goals/increase_readers.goal goals/improve_experience.goal
 
 
-#### create objectives and outcomes
+#### step 2: create objectives and outcomes
 
-Open the new `improve_response_time.goal` in your text editor and make some changes:
+Open `improve_experience.goal` in your text editor and make some changes:
 
- - Update `Objective:` to reflect our new goal. How about **Improve our digital customer experience this year**.
- - Let's only start with one `Outcome`, so delete from `Outcome: Increase Published Articles by 25%` to the end of the file
- - Now update your `Outcome:` keeping it short and sweet. How about **Improve Response Time**
+ 1. Update `Objective:` to reflect our new goal. How about `Improve our digital customer experience this year`
+ 1. Let's only start with one `Outcome`, so delete from `Outcome: Increase Published Articles by 25%` to the end of the file
+ 1. Now update your `Outcome:` keeping it short and sweet. How about `Improve Response Time`
 
-Now save the file and run again:
+When done it should look like this:
 
-    $ mobius
+```
+Objective: Improve our digital customer experience this year
 
-This runs all the `.goal` files in the `goals/` folder. We can just run our new one with this command:
+ Outcome: Improve Response Time
+    Given a baseline of 500000 "readers" on "Oct 1, 2016"
+    And a target of 1000000 "readers" by "Oct 1, 2017"
+    Then measure progress with "Total Readers Scale"
+```
 
-    $ mobiusloop goals/improve_response_time.goal
+Save your new goal and run `mobuis` again. Notice that `mobius` runs all the `.goal` files in the `goals/` folder by default.
+We can just run our new one with this command:
 
-We don't need the example anymore, so let's remove it:
+    $ mobius goals/improve_experience.goal
+
+Since we don't need the example anymore, let's remove it:
 
     $ rm goals/increase_readers.goal
 
 
-#### define baselines and targets
+#### step 3: define baselines and targets
 
-Open `improve_response_time.goal` again and let's update the baselines and targets.
-Let's pretend as of October 1, 2015 your app's home page takes 5 seconds to load. That's your baseline. Make a change:
+Let's pretend as of October 1, 2016 your app's home page takes 5 seconds to load. That's your baseline.
+Since your product owner has requested *sub-second response time*, that's your target.
 
- - In the row starting with `Given`, change 50000 to 5 and "readers" to "seconds"
+Open `improve_experience.goal` in your text editor and make some changes:
 
-Your product owner has requested <i>sub-second response time</i>. That's your target. Make another change:
+1. In the row starting with `Given`, change `50000` to `5` and `readers` to `seconds`
+1. In the row starting with `And`, change `1000000` to `1` and `readers` to `second`
 
- - In the row starting with `And`, change 1000000 to 1 and "readers" to "second"
+When done it should look like this:
 
-Now save the file and run again:
+```
+Objective: Improve our digital customer experience this year
 
-    $ mobius
+ Outcome: Improve Response Time
+    Given a baseline of 5 "seconds" on "Oct 1, 2016"
+    And a target of 1 "second" by "Oct 1, 2017"
+    Then measure progress with "Total Readers Scale"
+```
 
-This works, but we have 820,000 seconds! That's not right, so let's fix it.
+Now save the file and run `mobius` again.
 
-
-#### define scales
-
-Open `improve_response_time.goal` again and let's change the scale to record response times, not total readers.
-
- - In the row starting with `When`, change "Total Readers Scale" to "Page Response Scale"
-
-Now save the file and run again.
-
-    $ mobius
-
-Wow, much better! The "Page Response Scale" generated a request to [google.com](http://google.com) and compared the response time to your target of 1 second.
-
-How did you do? Did you hit the target?
+This works, but we have *820,000 seconds!* That's not right, so let's fix it.
 
 
-## developing with mobiusloop
+#### step 4: define scales
 
-Hopefully by now you're getting the hang of `mobius`. During development there are three basic steps:
+Open `improve_experience.goal` in your text editor and make some changes:
+
+1. In the row starting with `When`, change "Total Readers Scale" to "Page Response Scale"
+
+When done it should look like this:
+
+```
+Objective: Improve our digital customer experience this year
+
+ Outcome: Improve Response Time
+    Given a baseline of 5 "seconds" on "Oct 1, 2016"
+    And a target of 1 "second" by "Oct 1, 2017"
+    Then measure progress with "Page Response Scale"
+```
+
+Now save the file and run `mobius` again.
+
+Wow, much better! The *Page Response Scale* generated a request to [google.com](http://google.com) and compared the
+response time to your target of 1 second. It reported what percentage progress you had made to your
+target in your scheduled time. The color text indicates whether you are on track or not.
+
+Hopefully by now you know how to edit a `.goal` file with confidence and run them to report
+progress towards your objectives and outcomes. But unless all of your goals are related to page
+response time, you'll need to customize `mobius` to meet your needs.
+
+
+# mobius development guide
+
+Customizing `mobius` for your product is a 3 step process:
 
 
 #### step 1: create a new .goal file in the goals/ directory
 
-You can copy an example or start from scratch. When done, do a dry run to ensure your syntax is valid:
+We recommend copying a working example and modifying to meet your needs. For the .goal filename, we recommend naming it
+after your objective or problem statement. Something like this:
 
-    $ mobius goals/your_objective.goal --dry-run
+    $ cp goals/increase_readers.goal goals/improve_quality.goal
 
-Replacing `your_objective.goal` with your filename. If there's any syntax problems, fix them and run again until you get a clean run.
+Add your objectives, outcomes and the correct target and baseline values. When done, do a *dry run*:
 
+    $ mobius goals/improve_quality.goal --dry-run
 
-#### step 2: optionally create a step definition
-
-`mobius` ships with one step definition `goals/step_definitions/mobius_steps.rb`. If you write your objectives,
-problems, outcomes and key results in the format above there's no need to create one. However if you want to create your own
-format, you will need to create a custom step definition. To verify, run:
-
-    $ mobius goals/your_objective.goal
-
-If `mobius` cannot find a matching step definition for your `.goal` file, it will tell you the step definition to create.
-Copy and paste this into a new file `your_name_steps.rb` and save it to the `goals/step_definitions` folder. For more
-info on step definitions, see [Cucumber's reference](https://cucumber.io/docs/reference#step-definitions).
+Dry runs valid the `.goal` syntax is correct without actually running the scales that measure progress. Ensure your
+syntax is valid before moving on.
 
 
 #### step 3: create a new Scale
 
-Create a new Ruby class to perform the measurement. For example, if your .`goal` file contains "My Custom Scale", the Ruby class would be:
+Currently the only way to create a custom scale is to write some Ruby code. Specifically you must create a new Ruby class
+that extends the `Scale` class and implements a `measure` method. For example, if your .`goal` file contains
+"My Custom Scale", the Ruby class would be:
 
 ```Ruby
 require 'mobiusloop/scale'
@@ -285,19 +322,42 @@ class MyCustomScale < Scale
 
 end
 ```
-This code lives in `goals/step_definitions/my_custom.scale.rb`.
-The line `total = fetch_your_total` would be replaced with your custom logic.
-The last line `Measure.new(total)` returns a new measure, as required by all Scale subclasses.
+This class is saved to `goals/step_definitions/my_custom.scale.rb`. The line `total = fetch_your_total` would be replaced
+with your custom logic. The last line `Measure.new(total)` returns a new measure, as required by all Scales.
 
-We recommend writing unit tests around any custom scales you create to ensure they work as expected before integrating with `mobius`
+We recommend writing unit tests around any custom scales you create to ensure they work as expected before integrating with `mobius`.
 
-Remember, to run a single `.goal` do this:
+TODO: Add methods to write custom Scales without writing Ruby. Pre-ship a few common ones.
 
-    $ mobius goals/your_objective.goal
 
-To run all `.goal` files you do this:
+#### step 3: configure mobius
 
-    $ mobius
+Certain features of `mobius` are configurable in the `goals/support/config.yml` file. Specifically:
+
+```YAML
+measures:
+  save: false
+```
+Setting this to `true` records each `mobius` run's progress in a small `.json` file inside the `goals/measures` directory.
+The name of the file is the timestamp of when it was run. If you would like to report on trending
+progress of your objectives and outcomes over time, you incorporate these values.
+
+TODO: Identify an relatively easy method to use these to report trending
+
+
+```YAML
+progress:
+  good_percent: 10
+  bad_percent: 30
+```
+`mobius` reports progress in green, yellow or red font color to indicate whether you are on track to hit your target by the
+target date. This is configurable with the values `good_percent` and `bad_percent`.
+
+It is easiest to explain this with a picture:
+
+![mobius progress graph](/docs/mobius_progress.jpg)
+
+You can adjust `good_percent` and `bad_percent` to adjust how you report progress.
 
 
 ## advanced features
@@ -319,23 +379,6 @@ Then run with this:
 
 Only those definitions with the @performance tag are run.
 
-**Reports** - By default `mobius` outputs the results to the command line. You can save the results of each
-`mobius` run by enabling this in the configuration file `goals/support/config.yml`. Inside this file you will
-see the following definition:
-
-```YAML
-measures:
-  save: false
-```
-Change the value to `true`, save and run again. Each run will create a new JSON file and store it under the newly
-created `goals/measures/` directory. The filename contains a datetime stamp of when it was created.
-
-
-## further reading
-
-I have personally found [The Cucumber Book](https://pragprog.com/book/hwcuc/the-cucumber-book) a great reference and
- worthy of purchase if you would like to get the most of out `mobius`, given the Cucumber roots.
- [Cucumber.io](http://cucumber.io) is also a great reference I use.
 
 ## tests
 
@@ -345,12 +388,8 @@ If you downloaded the source code to `/workspace/mobiusloop-ruby`, you can run t
     $ rspec spec/mobiusloop/
 
 
-## defects
+## further reading
 
-See a missing test or found a defect? [Let us know](https://github.com/ryanshriver/mobiusloop-ruby/issues) by creating a new issue.
-
-
-## contribute
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/ryanshriver/mobiusloop-ruby
-
+I have personally found [The Cucumber Book](https://pragprog.com/book/hwcuc/the-cucumber-book) a great reference and
+ worthy of purchase if you would like to get the most of out `mobius`.
+ [Cucumber.io](http://cucumber.io) is also a reference I use.

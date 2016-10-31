@@ -1,11 +1,11 @@
 Objective: Get a million paying customers by Q3 2016
 
  Outcome: Increase Journal Readership to 1,000,000
-    Given a baseline of 500000 "readers" on "Oct 1, 2015"
-    And a target of 1000000 "readers" by "Oct 1, 2016"
+    Given a baseline of 500000 "readers" on "Oct 1, 2016"
+    And a target of 1000000 "readers" by "Oct 1, 2017"
     Then measure progress with "Total Readers Scale"
 
  Outcome: Increase Published Articles by 25%
-    Given a baseline of 40000 "articles" on "Jan 1, 2016"
-    And a target of 50000 "articles" by "Oct 1, 2016"
+    Given a baseline of 40000 "articles" on "Oct 1, 2016"
+    And a target of 50000 "articles" by "Oct 1, 2017"
     Then measure progress with "Total Articles Scale"

@@ -4,6 +4,6 @@ measures:
   save: false       # whether to save each run as .json file under goals/measures/
                     # set to true to enable, false to disable
 progress:
-  good: 10          # this percent or less deviation from target is "green"
-  bad: 30          # this percent or greater deviation from target is "red"
-                    # good must be less than bad and between these two numbers is "yellow"
+  good_percent: 10   # this percent or less deviation from target is "green"
+  bad_percent: 30   # this percent or greater deviation from target is "red"
+                         # good must be less than bad and between these two numbers is "yellow"
